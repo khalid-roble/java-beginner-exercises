@@ -1,5 +1,7 @@
 package com.amigoscode._2_developers._12_classes;
 
+import java.sql.SQLOutput;
+
 /**
  * Enum Exercises
  *
@@ -12,19 +14,48 @@ public class EnumExercises {
     // TODO: 1 - Create an enum called Season with four constants:
     //  SPRING, SUMMER, AUTUMN, WINTER
     //  For now, just declare them without any fields or methods.
+    enum Season{
+        SPRING("Flowers bloom"), //Since there is a constructor you have to add an description
+        SUMMER("Sun shines"),
+        AUTUMN("Leaves fall"),
+        WINTER("Snow falls");
 
 
-    // TODO: 2 - Modify the Season enum to add:
-    //  - A private final String 'description' field
-    //  - A constructor that takes a String description and assigns it
-    //  - Update each constant to pass a description, e.g.:
-    //    SPRING("Flowers bloom"), SUMMER("Sun shines"),
-    //    AUTUMN("Leaves fall"), WINTER("Snow falls")
-    //  Note: Enum constructors are always private (even without the keyword).
+        // TODO: 2 - Modify the Season enum to add:
+        //  - A private final String 'description' field
+        //  - A constructor that takes a String description and assigns it
+        //  - Update each constant to pass a description, e.g.:
+        //    SPRING("Flowers bloom"), SUMMER("Sun shines"),
+        //    AUTUMN("Leaves fall"), WINTER("Snow falls")
+        //  Note: Enum constructors are always private (even without the keyword).
+        private final String description;
 
 
-    // TODO: 3 - Add a method getDescription() to the Season enum that
-    //  returns the description field.
+
+        Season(String description) {
+            this.description = description;
+        }
+        // TODO: 3 - Add a method getDescription() to the Season enum that
+        //  returns the description field.
+        public String getDescription() {
+            return description;
+        }
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
 
 
     // TODO: 4 - Create an enum called Priority with three constants:
@@ -35,6 +66,21 @@ public class EnumExercises {
     //  - A constructor that takes an int level
     //  - A getter getLevel()
 
+    enum Priority{
+        Low(1),//Since there is a constructor you have to add an value e.g (1)
+        Medium(2),
+        High(3);
+
+        private final int level;
+
+        Priority(int level) {
+            this.level = level;
+        }
+        public int getLevel() {
+            return level;
+        }
+    }
+
 
     public static void main(String[] args) {
         System.out.println("=== Season Switch ===");
@@ -42,6 +88,26 @@ public class EnumExercises {
         //  For each season, print a message like "Spring: Flowers bloom"
         //  using the getDescription() method.
         //  Test with Season.SUMMER.
+        Season season = Season.SUMMER;
+        switch(season){
+            case SPRING:
+                System.out.println("Spring: " +
+                        season.getDescription());
+                break;
+            case SUMMER:
+                System.out.println("Summer: " +
+                        season.getDescription());
+                break;
+            case AUTUMN:
+                System.out.println("Autumn: " +
+                        season.getDescription());
+                break;
+            case WINTER:
+                System.out.println("Winter: " +
+                        season.getDescription());
+                break;
+
+        }
 
 
         System.out.println("\n=== Iterate Over Enum Values ===");
@@ -49,6 +115,15 @@ public class EnumExercises {
         //  Loop through them and print each one with its description and ordinal.
         //  Example output: "0: SPRING - Flowers bloom"
         //  Also iterate over Priority.values() and print each with its level.
+
+        for(Season s : Season.values()){
+            System.out.println(
+                    s.ordinal()+ ": "+ s + " - " + s.getDescription()
+            );
+        }
+        for(Priority p: Priority.values()){
+            System.out.println(p.getLevel());
+        }
 
     }
 }
