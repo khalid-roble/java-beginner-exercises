@@ -19,15 +19,36 @@ public class BankAccount {
     //   - balance (double)
     //   - ownerName (String)
 
+    private String accountNumber;
+    private double balance;
+    private String ownerName;
+
+
 
     // TODO: 2 - Create a constructor that takes accountNumber, ownerName,
     //   and an initialBalance. Validate that initialBalance >= 0,
     //   throwing IllegalArgumentException if not. Assign all fields.
 
+    public BankAccount(String accountNumber, String ownerName, double balance) {
+        if(balance >= 0){
+            this.accountNumber = accountNumber;
+            this.ownerName = ownerName;
+            this.balance = balance;
+        }
+        else{
+            throw new IllegalArgumentException();
+        }
+
+    }
+
 
     // TODO: 3 - Create a getter method for balance (getBalance).
     //   Do NOT create a setter for balance — it should only change
     //   through deposit() and withdraw().
+
+    public double getBalance() {
+        return balance;
+    }
 
 
     // TODO: 4 - Create a deposit(double amount) method.
@@ -37,6 +58,18 @@ public class BankAccount {
     //   - Call the private logTransaction() helper with a descriptive message
     //   - Return the new balance
 
+    public double deposit(double amount){
+        if(amount <= 0)
+            throw new IllegalArgumentException("Deposit amount must be positive");
+        else{
+            this.balance += amount;
+
+            BankAccount.logTransaction("Deposit: ");
+
+        }
+        return this.balance;
+
+    }
 
     // TODO: 5 - Create a withdraw(double amount) method.
     //   - If amount <= 0, throw IllegalArgumentException with message
@@ -47,9 +80,36 @@ public class BankAccount {
     //   - Call the private logTransaction() helper with a descriptive message
     //   - Return the new balance
 
+    public double withdraw(double amount){
+        if(amount <= 0){
+            throw new IllegalArgumentException("Withdrawal amount must be positive");
+
+        }
+        else if(amount > balance){
+            throw new IllegalStateException("Insufficient funds");
+        }
+        else{
+            this.balance -= amount;
+            BankAccount.logTransaction("Withdraw: ");
+        }
+        return this.balance;
+
+    }
+
+
 
     // TODO: 6 - Override toString() to return a string in the format:
     //   "BankAccount{accountNumber='XXX', ownerName='XXX', balance=XXX}"
+
+    @Override
+    public String toString() {
+        return "BankAccount{" +
+                "accountNumber='" + accountNumber + '\'' +
+                ", ownerName='" + ownerName + '\''+
+                ", balance=" + balance +
+
+                '}';
+    }
 
 
     // TODO: 7 - Create a private helper method logTransaction(String message)
@@ -57,21 +117,27 @@ public class BankAccount {
     //   "[Transaction Log] ". This method should NOT be accessible
     //   from outside the class.
 
+    private static void logTransaction(String message){
+
+
+        System.out.println(message+"[Transaction Log] ");
+    }
+
 
     public static void main(String[] args) {
         // Uncomment and test after completing the TODOs:
-        // BankAccount account = new BankAccount("ACC-001", "Alice", 1000.0);
-        // System.out.println(account);
-        // System.out.println("Balance: " + account.getBalance());
-        //
-        // account.deposit(500.0);
-        // System.out.println("After deposit: " + account.getBalance());
-        //
-        // account.withdraw(200.0);
-        // System.out.println("After withdrawal: " + account.getBalance());
-        //
-        // // These should throw exceptions:
-        // // account.deposit(-100);
-        // // account.withdraw(999999);
+         BankAccount account = new BankAccount("ACC-001", "Alice", 1000.0);
+         System.out.println(account);
+         System.out.println("Balance: " + account.getBalance());
+
+         account.deposit(500.0);
+         System.out.println("After deposit: " + account.getBalance());
+
+         account.withdraw(200.0);
+         System.out.println("After withdrawal: " + account.getBalance());
+
+         // These should throw exceptions:
+          account.deposit(-100);
+          account.withdraw(999999);
     }
 }
